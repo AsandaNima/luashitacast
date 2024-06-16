@@ -20,14 +20,14 @@ local korin_obi = true
 local anrin_obi = true
 
 -- Set to true if you have the item, and specify which ring or earring slot it will override
-local diabolos_pole = true
+local diabolos_pole = false
 local uggalepih_pendant = true
-local master_casters_bracelets = true
+local master_casters_bracelets = false
 local dream_boots = true
 local dream_mittens = true
 local skulkers_cape = false
 local wizards_mantle = false
-local republic_gold_medal = true
+local republic_gold_medal = false
 
 local diabolos_earring = false
 local diabolos_earring_slot = 'Ear2'
@@ -37,7 +37,7 @@ local ice_ring = false
 local ice_ring_slot = 'Ring2'
 local water_ring = true
 local water_ring_slot = 'Ring2'
-local overlords_ring = true
+local overlords_ring = false
 local overlords_ring_slot = 'Ring1'
 local wizards_earring = false
 local wizards_earring_slot = 'Ear2'
@@ -58,7 +58,7 @@ local sorcerers_tonban = 'Src. Tonban +1'
 
 -- SMN Specific
 local carbuncle_mitts = true
-local yinyang_robe = true
+local yinyang_robe = false
 local bahamuts_staff = false
 -- Leave as '' if you do not have them.
 local summoners_doublet = 'Smn. Doublet +1'

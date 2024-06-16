@@ -10,9 +10,7 @@ local sets = {
     },
     IdleALT = {},
     Resting = {},
-    Town = {
-        Body = "Ducal Aketon",
-    },
+    Town = {},
     Movement = {},
 
     DT = {},
@@ -42,11 +40,11 @@ local sets = {
     SIRD = { -- 102% to Cap
     },
     Haste = { -- Used for Utsusemi cooldown
-    Head = "Homam Zucchetto",-- +3haste +4acc
-    Body = "Rapparee Harness",-- +2racc +4haste
-    Hands = "Homam Manopolas",--+3haste +4acc
-    Waist = "Swift Belt",-- +3acc +4haste
-    Feet = "Homam Gambieras",-- +3haste +6acc +6racc
+    Head = "Homam Zucchetto",-- +3haste
+    Body = "Rapparee Harness",-- +4haste
+    Hands = "Homam Manopolas",-- +3haste
+    Waist = "Swift Belt",-- +4haste
+    Feet = "Homam Gambieras",-- +3haste
     },
 
     LockSet1 = {},
@@ -98,7 +96,7 @@ local sets = {
         Body = "Rogue's Vest",
     },
     Steal = {
-		Head = "Rogue's Bonnet",-- +2dex +5int +1steal",
+		Head = "Rogue's Bonnet",-- +1steal",
 		Hands = "Thief's Kote",-- +3steal
         Ring2 = "Rogue's Ring",-- +3steal
 		Legs = "Assassin's Culottes",-- +5steal
@@ -110,7 +108,17 @@ local sets = {
 
     TH = {},
 
-    Ranged = {},
+    Ranged = {
+		Head = "Optical Hat",-- +10acc +10racc +10evasion
+        Neck = "Peacock Amulet",-- +10acc +10racc,
+        Ear1 = "Drone Earring",-- +3agi
+        Ear2 = "Drone Earring",-- +3agi
+        Body = "Rapparee Harness",-- +2racc +4haste
+        Ring1 = "Merman's Ring",
+		Ring2 = "Merman's Ring",
+        Waist = "Ryl.Kgt. Belt",-- +2dex +2agi
+		Feet = "Homam Gambieras",-- +3haste +6acc +6racc
+    },
     Ranged_INT = {},
 }
 profile.Sets = sets

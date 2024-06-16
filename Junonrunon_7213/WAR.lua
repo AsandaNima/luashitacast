@@ -38,6 +38,12 @@ local sets = {
     TP_HighAcc = {},
 
     WS = {},
+    Warcry = {},
+    Provoke = {},
+
+    DW = {
+        Ear1 = 'Stealth Earring',
+    },
 }
 profile.Sets = sets
 
@@ -49,7 +55,12 @@ end
 gcmelee = gFunc.LoadFile('common\\gcmelee.lua')
 
 profile.HandleAbility = function()
-    -- You may add logic here
+    local action = gData.GetAction()
+    if (action.Name == 'Warcry') then
+        gFunc.EquipSet(sets.Warcry)
+    elseif (action.Name == 'Provoke') then
+        gFunc.EquipSet(sets.Provoke)
+    end
 end
 
 profile.HandleItem = function()
@@ -74,22 +85,40 @@ end
 profile.OnLoad = function()
     gcmelee.Load()
     profile.SetMacroBook()
-    -- You may add logic here
+
+    gcinclude.SetAlias(T{'dw'})
+    local function createToggle()
+        gcdisplay.CreateToggle('DW', false)
+    end
+    createToggle:once(2)
 end
 
 profile.OnUnload = function()
     gcmelee.Unload()
-    -- You may add logic here
+    gcinclude.ClearAlias(T{'dw'})
 end
 
 profile.HandleCommand = function(args)
-    gcmelee.DoCommands(args)
-    -- You may add logic here
+    if (args[1] == 'dw') then
+        gcdisplay.AdvanceToggle('DW')
+        gcinclude.Message('DW', gcdisplay.GetToggle('DW'))
+    else
+        gcmelee.DoCommands(args)
+    end
+
+    if (args[1] == 'horizonmode') then
+        profile.HandleDefault()
+    end
 end
 
 profile.HandleDefault = function()
     gcmelee.DoDefault()
-    -- You may add logic here
+
+    local player = gData.GetPlayer()
+    if (gcdisplay.GetToggle('DW') and player.Status == 'Engaged') then
+        gFunc.EquipSet(sets.DW)
+    end
+
     gcmelee.DoDefaultOverride()
     gFunc.EquipSet(gcinclude.BuildLockableSet(gData.GetEquipment()))
 end

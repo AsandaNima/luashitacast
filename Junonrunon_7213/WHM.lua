@@ -36,6 +36,7 @@ local sets = {
     ConserveMP = {},
 
     Cure = {},
+    Cure5 = {},
     Regen = {
         Body = 'Cleric\'s Bliaut',
     },
@@ -99,7 +100,6 @@ end
 
 profile.HandleWeaponskill = function()
     gFunc.EquipSet(sets.WS)
-    gcmelee.DoFenrirsEarring()
 end
 
 profile.OnLoad = function()
@@ -113,6 +113,10 @@ end
 
 profile.HandleCommand = function(args)
     gcmage.DoCommands(args)
+
+    if (args[1] == 'horizonmode') then
+        profile.HandleDefault()
+    end
 end
 
 profile.HandleDefault = function()

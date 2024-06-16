@@ -14,14 +14,14 @@ local load_stylist = true -- set to true to just load stylist on game start. thi
 -- Add additional equipment here that you want to automatically lock when equipping
 local LockableEquipment = {
     ['Main'] = T{'Warp Cudgel', 'Rep. Signet Staff', 'Kgd. Signet Staff', 'Fed. Signet Staff', 'Treat Staff II', 'Trick Staff II'},
-    ['Sub'] = T{'Warp Cudgel'},
+    ['Sub'] = T{},
     ['Range'] = T{},
     ['Ammo'] = T{},
     ['Head'] = T{'Reraise Hairpin', 'Dream Hat +1'},
     ['Neck'] = T{'Opo-opo Necklace'},
     ['Ear1'] = T{'Reraise Earring'},
     ['Ear2'] = T{'Reraise Earring'},
-    ['Body'] = T{'Custom Gilet +1', 'Mandra. Suit'},
+    ['Body'] = T{'Custom Gilet +1', 'Custom Top +1', 'Magna Gilet +1', 'Magna Top +1', 'Savage Top +1', 'Elder Gilet +1', 'Wonder Maillot +1', 'Wonder Top +1', 'Mandra. Suit'},
     ['Hands'] = T{},
     ['Ring1'] = T{'Anniversary Ring', 'Emperor Band', 'Chariot Band', 'Empress Band', 'Homing Ring', 'Tavnazian Ring', 'Dem Ring', 'Holla Ring', 'Mea Ring', 'Altep Ring', 'Yhoat Ring'},
     ['Ring2'] = T{'Anniversary Ring', 'Emperor Band', 'Chariot Band', 'Empress Band', 'Homing Ring', 'Tavnazian Ring', 'Dem Ring', 'Holla Ring', 'Mea Ring', 'Altep Ring', 'Yhoat Ring'},
@@ -42,7 +42,7 @@ gcdisplay = gFunc.LoadFile('common\\gcdisplayrag.lua')
 local gcinclude = {}
 
 local Overrides = T{ 'idle','dt','pdt','mdt','fireres','fres','iceres','ires','bres','lightningres','lres','tres','earthres','eres','sres','windres','wires','ares','waterres','wares','wres','evasion','eva' }
-local Commands = T{ 'kite','lock','locktp','rebind','lockset','warpme' }
+local Commands = T{ 'kite','lock','locktp','lockset','warpme','horizonmode' }
 
 local Towns = T{
     'Tavnazian Safehold','Al Zahbi','Aht Urhgan Whitegate','Nashmau',
@@ -183,8 +183,6 @@ function gcinclude.DoCommands(args)
         gcinclude.Message('Kite', gcdisplay.GetToggle('Kite'))
     elseif (args[1] == 'warpme') then
         gcinclude.RunWarpCudgel()
-    elseif (args[1] == 'rebind') then -- This is purely for myself only since I always forget ! is Alt...
-        AshitaCore:GetChatManager():QueueCommand(-1, '/bind !F1 /lac fwd ' .. args[2])
     elseif (args[1] == 'lockset') then
         if (tonumber(args[2]) ~= nil) then
             AshitaCore:GetChatManager():QueueCommand(-1, '/lac set LockSet' .. args[2])
@@ -259,6 +257,9 @@ function gcinclude.DoDefaultIdle()
     if (gcdisplay.IdleSet == 'Alternate') then gFunc.EquipSet('IdleALT') end
 end
 
+local restTimestamp = 0
+local restTimestampRecorded = false
+
 function gcinclude.DoDefaultOverride(isMelee)
     local environment = gData.GetEnvironment()
     local player = gData.GetPlayer()
@@ -295,8 +296,18 @@ function gcinclude.DoDefaultOverride(isMelee)
     if (gcdisplay.GetToggle('Kite') == true) then gFunc.EquipSet('Movement') end
 
     if (player.Status == 'Resting') then
-        gFunc.EquipSet('Resting')
-    elseif (player.IsMoving == true) and (gcdisplay.IdleSet == 'Normal' or gcdisplay.IdleSet == 'Alternate' or gcdisplay.IdleSet == 'DT' or gcdisplay.IdleSet == 'Fight') then
+        if (not restTimestampRecorded) then
+            restTimestamp = os.clock() + 16
+            restTimestampRecorded = true
+        end
+        if (os.clock() > restTimestamp) then
+            gFunc.EquipSet('Resting')
+        end
+    else
+        restTimestampRecorded = false
+    end
+
+    if (player.IsMoving == true) and (gcdisplay.IdleSet == 'Normal' or gcdisplay.IdleSet == 'Alternate' or gcdisplay.IdleSet == 'DT' or gcdisplay.IdleSet == 'Fight') then
         gFunc.EquipSet('Movement')
     elseif (gcdisplay.IdleSet == 'Fight' and player.Status ~= 'Engaged') then
         gFunc.EquipSet('DT')
@@ -330,10 +341,12 @@ function gcinclude.BuildLockableSet(equipment)
     for slot, item in pairs(equipment) do
         if (LockableEquipment[slot]:contains(item.Name)) then
             lockableSet[slot] = item
-            if (item.Name == 'Custom Gilet +1') then
+            if (item.Name == 'Custom Gilet +1' or item.Name == 'Custom Top +1' or item.Name == 'Magna Gilet +1' or item.Name == 'Magna Top +1' or item.Name == 'Savage Top +1' or item.Name == 'Elder Gilet +1' or item.Name == 'Wonder Maillot +1' or item.Name == 'Wonder Top +1') then
                 lockableSet['Hands'] = 'Displaced'
             elseif (item.Name == 'Mandra. Suit') then
                 lockableSet['Legs'] = 'Displaced'
+            elseif (slot == 'Main') then
+                lockableSet['Sub'] = 'Displaced'
             end
         end
     end

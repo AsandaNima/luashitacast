@@ -45,7 +45,7 @@ local healers_earring = false
 local healers_earring_slot = 'Ear2'
 
 -- RDM Specific
-local tp_diabolos_earring = true
+local tp_diabolos_earring = false
 local tp_diabolos_earring_slot = 'Ear2'
 local tp_fencers_ring = false
 local tp_fencers_ring_slot = 'Ring1'
@@ -54,19 +54,23 @@ local tp_fencers_ring_slot = 'Ring1'
 local sorcerers_ring = true
 local sorcerers_ring_slot = 'Ring1' -- This is Ring1 instead of Ring2 to allow Ice Ring override to work
 -- Leave as '' if you do not have them.
-local sorcerers_tonban = 'Sorcerer\'s Tonban'
+local sorcerers_tonban = 'Src. Tonban +1'
 
 -- SMN Specific
 local carbuncle_mitts = true
 local yinyang_robe = true
 local bahamuts_staff = false
 -- Leave as '' if you do not have them.
-local summoners_doublet = 'Summoner\'s Dblt.'
+local summoners_doublet = 'Smn. Doublet +1'
 local summoners_horn = 'Summoner\'s Horn'
+local conjurers_ring = false
+local conjurers_ring_slot = 'Ring1'
 
 -- WHM Specific
 local cure_clogs = false
 local ruckes_rung = false
+local medicine_ring = false
+local medicine_ring_slot = 'Ring1'
 
 -- Set to true if you have both Dark Earring and Abyssal earring to turn off Diabolos's Earring override for Dark Magic sets
 local dark_and_diabolos_earrings = true
@@ -89,7 +93,7 @@ local AliasList = T{
     'addmp','setmp','resetmp',
     'mode', -- RDM / BLM
     'csstun','hate','vert','fight', -- RDM
-    'yellow','mb', -- BLM
+    'yellow','mb','hnm', -- BLM
     'lag',
 }
 
@@ -191,6 +195,7 @@ function gcmage.SetVariables()
     if (player.MainJob == 'BLM') then
         gcdisplay.CreateToggle('Yellow', true)
         gcdisplay.CreateToggle('MB', false)
+        gcdisplay.CreateToggle('HNM', false)
     end
 end
 
@@ -241,7 +246,7 @@ function gcmage.DoCommands(args)
             gcdisplay.CreateToggle('Lock', true)
             gcinclude.Message('Equip Lock', gcdisplay.GetToggle('Lock'))
         elseif (args[1] == 'csstun') then
-            AshitaCore:GetChatManager():QueueCommand(-1, '/lac set Stun')
+            AshitaCore:GetChatManager():QueueCommand(-1, '/lac set StunACC')
             AshitaCore:GetChatManager():QueueCommand(-1, '/lac disable all')
             gcdisplay.CreateToggle('Lock', true)
             gcinclude.Message('Equip Lock', gcdisplay.GetToggle('Lock'))
@@ -271,6 +276,9 @@ function gcmage.DoCommands(args)
         elseif (args[1] == 'yellow') then
             gcdisplay.AdvanceToggle('Yellow')
             gcinclude.Message('Yellow', gcdisplay.GetToggle('Yellow'))
+        elseif (args[1] == 'hnm') then
+            gcdisplay.AdvanceToggle('HNM')
+            gcinclude.Message('HNM', gcdisplay.GetToggle('HNM'))
         end
     end
 end
@@ -283,8 +291,10 @@ function gcmage.DoDefault(ninSJMMP, whmSJMMP, blmSJMMP, rdmSJMMP)
 
     local equipMaxMP = false
     if (gcdisplay.IdleSet == 'Normal' or gcdisplay.IdleSet == 'Alternate') then
-        if (setMP > 0 and player.MP >= setMP + addMP - 50) then
-            equipMaxMP = true
+        if (setMP > 0) then
+            if (player.MP >= setMP + addMP - 50) then
+                equipMaxMP = true
+            end
         elseif (player.SubJob == "NIN") and ninSJMMP ~= nil and player.MP >= ninSJMMP + addMP - 50 then
             equipMaxMP = true
         elseif (player.SubJob == "WHM") and whmSJMMP ~= nil and player.MP >= whmSJMMP + addMP - 50 then
@@ -342,6 +352,9 @@ function gcmage.DoDefault(ninSJMMP, whmSJMMP, blmSJMMP, rdmSJMMP)
             if staff ~= '' then
                 gFunc.Equip('Main', staff)
             end
+            if (player.HPP <= 75 and player.TP < 1000) and conjurers_ring then
+                gFunc.Equip(conjurers_ring_slot, 'Conjurer\'s Ring')
+            end
             if (lastSummoningElement == 'Light') then
                 if (carbuncle_mitts) then
                     gFunc.Equip('Hands', 'Carbuncle Mitts') -- Who cares about Light Spirit anyway
@@ -388,7 +401,6 @@ function gcmage.DoPrecast(fastCastValue)
         if (gcdisplay.GetToggle('Hate') == true) then
             gFunc.EquipSet('Hate')
 
-
             local target = gData.GetActionTarget()
             local me = AshitaCore:GetMemoryManager():GetParty():GetMemberName(0)
 
@@ -405,6 +417,12 @@ function gcmage.DoPrecast(fastCastValue)
         gFunc.EquipSet('Precast')
     else
         gFunc.EquipSet('Precast')
+
+        local weakened = gData.GetBuffCount('Weakened');
+        if (weakened >= 1) then
+            do return end
+        end
+
         if (action.Skill == 'Elemental Magic' and player.MainJob == 'BLM' and gcdisplay.GetToggle('Yellow') == true) then
             if (not ElementalDebuffs:contains(action.Name)) then
                 gFunc.EquipSet('Yellow')
@@ -443,6 +461,11 @@ function gcmage.SetupMidcastDelay(fastCastValue)
     local castDelay = ((castTime * (1 - fastCastValue)) / 1000) - minimumBuffer
     if (castDelay >= packetDelay) then
         gFunc.SetMidDelay(castDelay)
+    end
+
+    local weakened = gData.GetBuffCount('Weakened');
+    if (weakened >= 1) then
+        do return end
     end
 
     if (action.Skill == 'Elemental Magic' and player.MainJob == 'BLM' and gcdisplay.GetToggle('Yellow') == true) then
@@ -613,6 +636,9 @@ function gcmage.EquipHealing(maxMP, sets, chainspell)
     local me = AshitaCore:GetMemoryManager():GetParty():GetMemberName(0)
 
     gFunc.EquipSet('Cure')
+    if (action.Name == 'Cure V') then
+        gFunc.EquipSet('Cure5')
+    end
     if (player.SubJob == "WHM" and healers_earring) then
         gFunc.Equip(healers_earring_slot, 'Healer\'s Earring')
     end
@@ -625,6 +651,9 @@ function gcmage.EquipHealing(maxMP, sets, chainspell)
         if (maxMP == 0 or player.MP < maxMP * 0.85) then
             gFunc.Equip(water_ring_slot, 'Water Ring')
         end
+    end
+    if (player.MainJob == 'WHM' and medicine_ring and player.HPP <= 75 and player.TP <= 1000) then
+        gFunc.Equip(medicine_ring_slot, 'Medicine Ring')
     end
     if (gcdisplay.GetToggle('Hate') == true) then
         gFunc.EquipSet('Hate')
@@ -653,20 +682,15 @@ function gcmage.EquipElemental(maxMP)
     local environment = gData.GetEnvironment()
 
     gFunc.EquipSet('Nuke')
+    if (gcdisplay.GetToggle('HNM') == true) then
+        gFunc.EquipSet('NukeHNM')
+    end
     if (ElementalDebuffs:contains(action.Name)) then
         gFunc.EquipSet('NukeDOT')
         if (player.SubJob == "BLM" and wizards_earring) then
             gFunc.Equip(wizards_earring_slot, 'Wizard\'s Earring')
         end
     else
-        if (action.MppAftercast < 51) and uggalepih_pendant then
-            if (maxMP == 0 or action.MpAftercast < maxMP * 0.51) then
-                gFunc.Equip('Neck', 'Uggalepih Pendant')
-            end
-        end
-        if (gcdisplay.GetToggle('MB') == true) then
-            gFunc.EquipSet('MB')
-        end
         if (gcdisplay.GetCycle('Mode') == 'Accuracy') then
             gFunc.EquipSet('NukeACC')
             if (conquest:GetOutsideControl()) and (player.MainJob == 'RDM') and master_casters_bracelets then
@@ -684,6 +708,14 @@ function gcmage.EquipElemental(maxMP)
                     gFunc.Equip(ice_ring_slot, 'Ice Ring')
                 end
             end
+        end
+        if (action.MppAftercast < 51) and uggalepih_pendant then
+            if (maxMP == 0 or action.MpAftercast < maxMP * 0.51) then
+                gFunc.Equip('Neck', 'Uggalepih Pendant')
+            end
+        end
+        if (gcdisplay.GetToggle('MB') == true) then
+            gFunc.EquipSet('MB')
         end
         if (ObiCheck(action)) then
             local obi = NukeObiTable[action.Element]
@@ -761,9 +793,23 @@ function gcmage.EquipDark(maxMP)
     local action = gData.GetAction()
 
     gFunc.EquipSet('Dark')
-    if (environment.DayElement == 'Dark') and diabolos_ring and player.MPP <= 85 and action.Name ~= 'Aspir' then
-        if (maxMP == 0 or player.MP < maxMP * 0.85) then
-            gFunc.Equip(diabolos_ring_slot, 'Diabolos\'s Ring')
+    if (player.MainJob == 'BLM' or player.MainJob == 'RDM') and (action.Name == 'Stun') then
+        gFunc.EquipSet('Stun')
+        local chainspell = gData.GetBuffCount('Chainspell')
+        if (chainspell > 0) then
+            gFunc.EquipSet('StunACC')
+        end
+    end
+
+    if (environment.DayElement == 'Dark') and diabolos_ring then
+        if (player.MPP <= 85 and action.Name == 'Drain') then
+            if (maxMP == 0 or player.MP < maxMP * 0.85) then
+                gFunc.Equip(diabolos_ring_slot, 'Diabolos\'s Ring')
+            end
+        elseif (player.MPP <= 50 and action.Name == 'Aspir') then
+            if (maxMP == 0 or player.MP < maxMP * 0.50) then
+                gFunc.Equip(diabolos_ring_slot, 'Diabolos\'s Ring')
+            end
         end
     end
     if (DiabolosPoleSpells:contains(action.Name) and overlords_ring) then

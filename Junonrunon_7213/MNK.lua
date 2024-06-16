@@ -25,21 +25,20 @@ local sets = {
         Neck = 'Evasion Torque',
         Ear1 = 'Merman\'s Earring',
         Ear2 = 'Merman\'s Earring',
-        -- Body = 'Kirin\'s Osode',
-        Body = 'Shura Togi',
+        Body = 'Mel. Cyclas +1',
         Hands = 'Dst. Mittens +1',
         Ring1 = 'Merman\'s Ring',
         Ring2 = 'Sattva Ring',
         Back = 'Boxer\'s Mantle',
         Waist = 'Warwolf Belt',
         Legs = 'Byakko\'s Haidate',
-        Feet = 'Herald\'s Gaiters',
+        Feet = 'Dst. Leggings +1',
     },
     IdleALT = {},
     Resting = {
         Neck = 'Paisley Scarf',
         Ear2 = 'Sanative Earring',
-        Body = 'Melee Cyclas',
+        Body = 'Mel. Cyclas +1',
         Hands = 'Dst. Mittens +1',
         Back = 'Melee Cape',
         Feet = 'Dst. Leggings +1',
@@ -79,7 +78,7 @@ local sets = {
         Body = 'Shura Togi',
         Hands = 'Mel. Gloves +1',
         Ring1 = 'Flame Ring',
-        Ring2 = 'Flame Ring',
+        Ring2 = 'Triumph Ring',
         Back = 'Forager\'s Mantle',
         Waist = 'Black Belt',
         Legs = 'Shura Haidate',
@@ -118,8 +117,7 @@ local sets = {
         Neck = 'Faith Torque',
         Ear1 = 'Brutal Earring',
         Ear2 = 'Merman\'s Earring',
-        -- Body = 'Kirin\'s Osode',
-        Body = 'Shura Togi',
+        Body = 'Kirin\'s Osode',
         Hands = 'Mel. Gloves +1',
         Ring1 = 'Toreador\'s Ring',
         Ring2 = 'Toreador\'s Ring',
@@ -145,7 +143,7 @@ local sets = {
 
     TP_Focus = {
         Ring1 = 'Flame Ring',
-        Ring2 = 'Flame Ring',
+        Ring2 = 'Triumph Ring',
     },
 
     SJ_DRG = {
@@ -161,7 +159,7 @@ local sets = {
         Neck = 'Thunder Gorget',
         Ear2 = 'Merman\'s Earring',
         Ring1 = 'Flame Ring',
-        Ring2 = 'Flame Ring',
+        Ring2 = 'Triumph Ring',
         Legs = 'Shura Haidate',
         Feet = 'Shura Sune-Ate',
     },
@@ -186,8 +184,8 @@ local sets = {
         Head = 'Genbu\'s Kabuto',
         Ear1 = 'Brutal Earring',
         Ear2 = 'Robust Earring',
-        Ring1 = 'Topaz Ring',
-        Ring2 = 'Toreador\'s Ring',
+        Ring1 = 'Robust Ring',
+        Ring2 = 'Sattva Ring',
         Back = 'Wyvern Mantle',
         Legs = 'Shura Haidate',
         Feet = 'Dune Boots',
@@ -199,8 +197,7 @@ local sets = {
         Ear1 = 'Robust Earring',
         Ear2 = 'Robust Earring',
         Body = 'Tpl. Cyclas +1',
-        Ring1 = 'Topaz Ring',
-        -- Ring1 = 'Soil Ring',
+        Ring1 = 'Robust Ring',
         Ring2 = 'Sattva Ring',
         Back = 'Melee Cape',
         Waist = 'Warwolf Belt',
@@ -215,10 +212,10 @@ local sets = {
         Ear2 = 'Cmn. Earring',
         Hands = 'Dvt. Mitts +1',
         Ring1 = 'Aqua Ring',
-        Ring2 = 'Aqua Ring',
+        Ring2 = 'Communion Ring',
         Back = 'Melee Cape',
         Legs = 'Tpl. Hose +1',
-        Waist = 'Reverend Sash',
+        -- Waist = 'Reverend Sash',
         Feet = 'Suzaku\'s Sune-Ate',
     },
 
@@ -333,6 +330,10 @@ end
 
 profile.HandleCommand = function(args)
     gcmelee.DoCommands(args)
+
+    if (args[1] == 'horizonmode') then
+        profile.HandleDefault()
+    end
 end
 
 profile.HandleDefault = function()

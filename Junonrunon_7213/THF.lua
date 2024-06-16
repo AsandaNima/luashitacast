@@ -212,13 +212,17 @@ profile.HandleCommand = function(args)
     else
         gcmelee.DoCommands(args)
     end
+
+    if (args[1] == 'horizonmode') then
+        profile.HandleDefault()
+    end
 end
 
 profile.HandleDefault = function()
     gcmelee.DoDefault()
 
     local player = gData.GetPlayer()
-    if (player.SubJob == 'NIN') then
+    if (player.SubJob == 'NIN' and player.Status == 'Engaged') then
         gFunc.EquipSet('TP_NIN')
     end
 

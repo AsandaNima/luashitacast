@@ -1,7 +1,3 @@
---[[
-    This is provided purely as an example. No testing has been done.
-]]
-
 local use_chaos_burgeonet_for_tp_during_souleater = false
 
 local profile = {}
@@ -127,12 +123,17 @@ end
 
 profile.HandleCommand = function(args)
     gcmelee.DoCommands(args)
+
+    if (args[1] == 'horizonmode') then
+        profile.HandleDefault()
+    end
     -- You may add logic here
 end
 
 profile.HandleDefault = function()
     gcmelee.DoDefault()
 
+    local player = gData.GetPlayer()
     local souleater = gData.GetBuffCount('Souleater')
     if (souleater > 0 and player.Status == 'Engaged' and use_chaos_burgeonet_for_tp_during_souleater) then
         gFunc.EquipSet(sets.SoulEater)
@@ -157,9 +158,9 @@ profile.HandleMidcast = function()
         gFunc.EquipSet(sets.Enfeebling)
     elseif (action.Skill == 'Dark Magic') then
         gFunc.EquipSet(sets.Drain)
-        if (string.contains(spell.Name, 'Absorb')) then
+        if (string.contains(action.Name, 'Absorb')) then
             gFunc.EquipSet(sets.Absorb)
-        elseif (string.contains(spell.Name, 'Stun')) then
+        elseif (string.contains(action.Name, 'Stun')) then
             gFunc.EquipSet(sets.Haste)
         end
     end

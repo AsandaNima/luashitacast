@@ -2,7 +2,7 @@
 
 A combined LuAshitacast for HorizonXI (Lvl 75 era) that was originally based off of https://github.com/GetAwayCoxn/Luashitacast-Profiles
 
-All jobs are fully implemented to my knowledge except for WAR however implementation should be trivial (See Contact Me section below). 
+All jobs are fully implemented.
 
 The intention for these luas is to comprehensively cover all required game mechanics for 75-era content as almost every other lua I have found either does not implement or poorly implements functionality such as pdt / mdt / resist sets, spell interruption rate down (SIRD) / midcast delay, or different set toggling.
 
@@ -21,13 +21,13 @@ These luas were designed to be used in HorizonXI and therefore features such as 
 - Note that **config** in the path. there may not be a luashitacast directory there if you have never used it before - just create one.
 - Rename the Rag_5040 folder to [Your_Character_Name]_[Your_Character_ID]
 - [Your_Character_ID] may be obtained from another plugin such as MobDB.
-- Edit Equipment Sets in [JOB].lua. You may delete any of these if you're only looking for a lua one of the jobs.
+- Edit Equipment Sets in [JOB].lua.
 - Edit Elemental Staves (NQ vs HQ), Obis and some conditional gear in gcmage.lua if you are using these luas for mage jobs.
 - Edit Fenrir's Earring in gcmelee.lua if you are using these luas for melee jobs.
 - Edit Aketons and Dream gear etc. and turn on or off additional logging in gcincluderag.lua.
 - Make sure you fill out the fastcastValue correctly in your [JOB].lua if you are using any Fast Cast gear in the Precast set.
 - The midcast delay assumes you use the PacketFlow plugin. If you don't use PacketFlow, adjust the values in gcmage.lua (or gcmelee.lua for melee jobs).
-- If you define a specific mainhand in regular sets, it will still equip the correct stave if you have them listed in gcmage.lua
+- If you define a specific mainhand in regular sets, it will still equip the correct staff if you have them listed in gcmage.lua
 - If you have followed all these instructions and are experiencing crashes when loading the game or changing jobs, check out the Troubleshooting Crashes section on the bottom of this page.
 
 # How to Update
@@ -85,6 +85,10 @@ This will work 99% of the time unless you have added your own logic and therefor
 /lag - removes midcast delays and yellow set delays for when a zone is lagging
        to give ashitacast the maximum chance of actually equipping the correct gear on cast.
        interim equip sets will no longer work when this is enabled.
+
+/horizonmode - if you wish to use Horizon Mode in LuAshitacast to be 100% horizon approved,
+               you can then use this alias to manually trigger a handle default gear equip
+               using a key press!
 ```
 
 ## Additional Commands for All Mage Jobs:
@@ -181,16 +185,14 @@ All of the following toggles set what jug Call Beast will use.
 
  # Additional Notes
 
-- To fix the "Sending packet to request current nation." message to stop polling when in town, you can open the in-game Status menu that displays your stats and experience points.
-
 - LuAshitacast provides functionality to automatically equip Level Sync gear. This LuAshitacast intentionally does NOT make use of this functionality to make it easier for first time users to be able to copy paste their own gear sets in place of mine. Adding this functionality will make it quite difficult for users on older versions of this LuAshitacast to update and so is not planned to ever be added. Level Sync content is a joke anyway. Just throw on some garbage gear full time and clear it.
 
-- Horizon's rules of what is legal or not in LuAshitacast is poorly explained. This LuAshitacast attempts to abide by their rules.
+- Horizon's rules on what is legal or not in LuAshitacast is poorly explained and will vary depending on what admin or GM you talk to anyway. This LuAshitacast attempts to abide by the spirit of their rules.
 
 - e.g. Some users have asked me if equipping movement speed gear to override Dusk gear if they move their character during content is legal. Given that you are pushing movement keys to move your character, I consider this to be legal within the vague guidelines given by HorizonXI. You may disagree. Short of explicit guidance from a GM, this will not be changed to cater for you.
 
 # Contact Me
 
-Feel free to DM me on Discord for if you encounter bugs or have feature requests or if you are a WAR and are interested in using these templates to implement the job. I am easily found in the HorizonXI or Ashita Discords.
+Feel free to DM me on Discord for if you encounter bugs or have feature requests or functionality is missing. I am easily found in the HorizonXI or Ashita Discords.
 
 Do NOT DM me if you have not bothered to read through this README and did not follow the instructions written. You will be ignored.

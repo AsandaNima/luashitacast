@@ -45,6 +45,7 @@ local sets = {
     Reward = {},
     Ready_Physical = {},
     Ready_Magic = {},
+    Call_Beast = {},
 }
 profile.Sets = sets
 
@@ -107,6 +108,7 @@ profile.HandleAbility = function()
             gFunc.Equip('Ammo', 'Pet Food Alpha')
         end
     elseif (action.Name == 'Call Beast') then
+        gFunc.EquipSet(sets.Call_Beast)
         local pet = gcdisplay.GetCycle('Pet')
         if (pet == 'Sheep') then
             if (player.MainJobSync >= 43) then
@@ -202,6 +204,10 @@ profile.HandleCommand = function(args)
     else
         gcmelee.DoCommands(args)
     end
+
+    if (args[1] == 'horizonmode') then
+        profile.HandleDefault()
+    end
 end
 
 profile.HandleDefault = function()
@@ -211,7 +217,7 @@ profile.HandleDefault = function()
     if (player.HPP <= 50 and muscle_belt ~= '') then
         gFunc.Equip('Waist', muscle_belt)
     end
-    if (player.SubJob == 'NIN') then
+    if (player.SubJob == 'NIN' and player.Status == 'Engaged') then
         gFunc.EquipSet('TP_NIN')
     end
 

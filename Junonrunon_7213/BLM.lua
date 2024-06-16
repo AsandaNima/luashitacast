@@ -2,21 +2,21 @@ local profile = {}
 
 local fastCastValue = 0.04 -- 4% from gear listed in Precast set
 
-local ninSJNukeMaxMP = nil -- The Max MP you have when /nin in your nuking set
-local whmSJNukeMaxMP = nil -- The Max MP you have when /whm in your nuking set
-local rdmSJNukeMaxMP = nil -- The Max MP you have when /rdm in your nuking set
+local ninSJNukeMaxMP = 709 -- The Max MP you have when /nin in your nuking set
+local whmSJNukeMaxMP = 787 -- The Max MP you have when /whm in your nuking set
+local rdmSJNukeMaxMP = 768 -- The Max MP you have when /rdm in your nuking set
 
 local warlocks_mantle = true -- Don't add 2% to fastCastValue to this as it is SJ dependant
 local republic_circlet = false
 
-local opuntia_hoop = false
+local opuntia_hoop = true
 local opuntia_hoop_slot = 'Ring1'
 
 local sets = {
     Idle = {
         Main = 'Terra\'s Staff',
         Ammo = 'Hedgehog Bomb',
-        Head = 'Sorcerer\'s Petas.',
+        Head = 'Genie Tiara',
         Neck = 'Jeweled Collar',
         Ear1 = 'Merman\'s Earring',
         Ear2 = 'Merman\'s Earring',
@@ -26,11 +26,16 @@ local sets = {
         Ring2 = 'Sattva Ring',
         Back = 'Umbra Cape',
         Waist = 'Hierarch Belt',
-        Legs = 'Sorcerer\'s Tonban',
+        Legs = 'Igqira Lappas',
         Feet = 'Herald\'s Gaiters',
     },
     IdleALT = {},
-    IdleMaxMP = {},
+    IdleMaxMP = {
+        Neck = 'Uggalepih Pendant',
+        Ear1 = 'Loquac. Earring',
+        Ear2 = 'Magnetic Earring',
+        Back = 'Merciful Cape',
+    },
     Resting = {
         Main = 'Pluto\'s Staff',
         Head = 'Hydra Beret',
@@ -38,13 +43,21 @@ local sets = {
         Ear1 = 'Relaxing Earring',
         Ear2 = 'Magnetic Earring',
         Body = 'Mahatma Hpl.',
-        -- Hands = 'Hydra Gloves',
+        Hands = 'Hydra Gloves',
+        Ring1 = 'Serket Ring',
+        Back = 'Errant Cape',
         Waist = 'Hierarch Belt',
         Legs = 'Baron\'s Slops',
         -- Legs = 'Hydra Brais',
-        -- Feet = 'Hydra Gaiters',
+        Feet = 'Hydra Gaiters',
     },
-    Town = {},
+    Town = {
+        Main = 'Terra\'s Staff',
+        Head = 'Sorcerer\'s Petas.',
+        Body = 'Sorcerer\'s Coat',
+        Legs = 'Src. Tonban +1',
+        Feet = 'Herald\'s Gaiters',
+    },
     Movement = {
         Feet = 'Herald\'s Gaiters',
     },
@@ -53,18 +66,22 @@ local sets = {
         Main = 'Terra\'s Staff',
         Ear1 = 'Merman\'s Earring',
         Ear2 = 'Merman\'s Earring',
+        Head = 'Genie Tiara',
         Body = 'Sorcerer\'s Coat',
         Ring1 = 'Jelly Ring',
         Ring2 = 'Sattva Ring',
+        Legs = 'Igqira Lappas',
         Back = 'Umbra Cape',
     },
     DTNight = {
         Main = 'Terra\'s Staff',
         Ear1 = 'Merman\'s Earring',
         Ear2 = 'Merman\'s Earring',
+        Head = 'Genie Tiara',
         Body = 'Sorcerer\'s Coat',
         Ring1 = 'Jelly Ring',
         Ring2 = 'Sattva Ring',
+        Legs = 'Igqira Lappas',
         Back = 'Umbra Cape',
     },
     MDT = { -- Shell IV provides 23% MDT
@@ -76,6 +93,7 @@ local sets = {
         Body = 'Sorcerer\'s Coat',
         Ring1 = 'Merman\'s Ring', -- 4
         Ring2 = 'Sattva Ring', -- 5
+        Legs = 'Igqira Lappas',
         Back = 'Hexerei Cape', -- 3
     },
     FireRes = {
@@ -84,11 +102,12 @@ local sets = {
         Neck = 'Jeweled Collar', -- 10
         Ear1 = 'Cmn. Earring', -- 11
         Ear2 = 'Cmn. Earring', -- 11
-        Ring1 = 'Ruby Ring', -- 9
+        Ring1 = 'Triumph Ring', -- 10
         Ring2 = 'Malflame Ring', -- 10
         Back = 'Hexerei Cape',
         Waist = 'Water Belt', -- 20
         Feet = 'Power Sandals', -- 7
+        Legs = 'Igqira Lappas',
     },
     IceRes = {
         Main = 'Vulcan\'s Staff', -- 20
@@ -96,10 +115,11 @@ local sets = {
         Neck = 'Jeweled Collar', -- 10
         Ear1 = 'Diamond Earring', -- 10
         Ear2 = 'Diamond Earring', -- 10
-        Ring1 = 'Diamond Ring', -- 9
+        Ring1 = 'Omniscient Ring', -- 10
         Ring2 = 'Malfrost Ring', -- 10
         Back = 'Aurora Mantle', -- 7
         Waist = 'Fire Belt', -- 20
+        Legs = 'Igqira Lappas',
     },
     LightningRes = {
         Main = 'Terra\'s Staff', -- 20
@@ -111,6 +131,7 @@ local sets = {
         Ring2 = 'Malflash Ring', -- 10
         Back = 'Hexerei Cape',
         Waist = 'Earth Belt', -- 20
+        Legs = 'Igqira Lappas',
     },
     EarthRes = {
         Main = 'Auster\'s Staff', -- 20
@@ -118,10 +139,11 @@ local sets = {
         Neck = 'Jeweled Collar', -- 10
         Ear1 = 'Robust Earring', -- 11
         Ear2 = 'Robust Earring', -- 11
-        Ring1 = 'Topaz Ring', -- 9
+        Ring1 = 'Robust Ring', -- 10
         Ring2 = 'Maldust Ring', -- 10
         Back = 'Hexerei Cape',
         Waist = 'Wind Belt', -- 20
+        Legs = 'Igqira Lappas',
     },
     WindRes = {
         Main = 'Aquilo\'s Staff', -- 20
@@ -134,6 +156,7 @@ local sets = {
         Ring2 = 'Malgust Ring', -- 10
         Back = 'Aurora Mantle', -- 7
         Waist = 'Ice Belt', -- 20
+        Legs = 'Igqira Lappas',
     },
     WaterRes = {
         Main = 'Jupiter\'s Staff', -- 20
@@ -141,10 +164,11 @@ local sets = {
         Neck = 'Jeweled Collar', -- 10
         Ear1 = 'Cmn. Earring', -- 11
         Ear2 = 'Cmn. Earring', -- 11
-        Ring1 = 'Sapphire Ring', -- 9
+        Ring1 = 'Communion Ring', -- 10
         Ring2 = 'Malflood Ring', -- 10
         Back = 'Hexerei Cape',
         Waist = 'Lightning Belt', -- 20
+        Legs = 'Igqira Lappas',
     },
     Evasion = {},
 
@@ -184,12 +208,13 @@ local sets = {
         Feet = 'Rostrum Pumps',
     },
     Haste = { -- Used only on Haste, Refresh, Blink and Utsusemi casts
-        Head = 'Nashira Turban',
+        Head = 'Nashira Turban', -- 2
         Ear1 = 'Loquac. Earring',
-        Hands = 'Nashira Gages',
-        Waist = 'Swift Belt',
-        -- Legs = 'Nashira Serawheels',
-        Feet = 'Nashira Crackows',
+        Body = 'Nashira Manteel', -- 3
+        Hands = 'Nashira Gages', -- 1
+        Waist = 'Swift Belt', -- 4
+        Legs = 'Nashira Seraweels', -- 2
+        Feet = 'Nashira Crackows', -- 1
     },
     ConserveMP = {
         Ear2 = 'Magnetic Earring',
@@ -199,18 +224,19 @@ local sets = {
 
     Cure = {
         Ammo = 'Hedgehog Bomb', -- 1
-        Head = 'Nashira Turban', -- 5
-        Neck = 'Benign Necklace',
+        Head = 'Hydra Beret', -- 8
+        Neck = 'Benign Necklace', -- 2
         Ear1 = 'Novia Earring', -- 7
         Ear2 = 'Magnetic Earring',
-        Body = 'Mahatma Hpl.', -- 4
-        Hands = 'Dvt. Mitts +1', -- 3
+        Body = 'Hydra Doublet', -- 9
+        Hands = 'Hydra Gloves', -- 5
         Ring1 = 'Aqua Ring',
-        Ring2 = 'Aqua Ring',
+        Ring2 = 'Communion Ring',
         Back = 'Errant Cape', -- 5
         Waist = 'Penitent\'s Rope', -- 3
         Legs = 'Mahatma Slops', -- 4
-        Feet = 'Mahatma Pigaches', -- 3
+        -- Legs = 'Hydra Brais', -- 6
+        Feet = 'Hydra Gaiters', -- 3
     },
     Cursna = {
         Back = 'Altruistic Cape',
@@ -226,7 +252,7 @@ local sets = {
         Body = 'Mahatma Hpl.',
         Hands = 'Dvt. Mitts +1',
         Ring1 = 'Aqua Ring',
-        Ring2 = 'Aqua Ring',
+        Ring2 = 'Communion Ring',
         Back = 'Merciful Cape',
         Waist = 'Penitent\'s Rope',
         Legs = 'Mahatma Slops',
@@ -245,7 +271,7 @@ local sets = {
         Body = 'Mahatma Hpl.',
         Hands = 'Zenith Mitts +1',
         Ring1 = 'Snow Ring',
-        Ring2 = 'Snow Ring',
+        Ring2 = 'Omniscient Ring',
         Back = 'Merciful Cape',
         Waist = 'Penitent\'s Rope',
         Waist = 'Sorcerer\'s Belt',
@@ -265,7 +291,7 @@ local sets = {
         Ear2 = 'Cmn. Earring',
         Hands = 'Dvt. Mitts +1',
         Ring1 = 'Aqua Ring',
-        Ring2 = 'Aqua Ring',
+        Ring2 = 'Communion Ring',
         Waist = 'Penitent\'s Rope',
         Feet = 'Mahatma Pigaches',
     },
@@ -275,7 +301,7 @@ local sets = {
         Ear2 = 'Morion Earring +1',
         Hands = 'Mahatma Cuffs',
         Ring1 = 'Snow Ring',
-        Ring2 = 'Snow Ring',
+        Ring2 = 'Omniscient Ring',
         Waist = 'Sorcerer\'s Belt',
         Feet = 'Src. Sabots +1',
     },
@@ -291,15 +317,29 @@ local sets = {
         Neck = 'Dark Torque',
         Ear1 = 'Abyssal Earring',
         Ear2 = 'Dark Earring',
-        Body = 'Mahatma Hpl.',
         Body = 'Nashira Manteel',
         Hands = 'Src. Gloves +1',
         Ring1 = 'Snow Ring',
-        Ring2 = 'Snow Ring',
+        Ring2 = 'Omniscient Ring',
         Back = 'Merciful Cape',
         Waist = 'Sorcerer\'s Belt',
-        Legs = 'Wizard\'s Tonban',
+        Legs = 'Wzd. Tonban +1',
         Feet = 'Igqira Huaraches',
+    },
+    Stun = {
+        Ammo = 'Phtm. Tathlum',
+        Head = 'Nashira Turban',
+        Neck = 'Dark Torque',
+        Ear1 = 'Abyssal Earring',
+        Ear1 = 'Loquac. Earring',
+        Body = 'Nashira Manteel',
+        Hands = 'Nashira Gages',
+        Ring1 = 'Snow Ring',
+        Ring2 = 'Omniscient Ring',
+        Back = 'Merciful Cape',
+        Waist = 'Swift Belt',
+        Legs = 'Nashira Seraweels',
+        Feet = 'Nashira Crackows',
     },
 
     Nuke = {
@@ -310,9 +350,23 @@ local sets = {
         Ear2 = 'Moldavite Earring',
         Body = 'Igqira Weskit',
         Hands = 'Zenith Mitts +1',
-        -- Hands = 'Wzd. Gloves +1', -- Change to these on base set when fighting anything actually difficult.
         Ring1 = 'Snow Ring',
-        Ring2 = 'Snow Ring',
+        Ring2 = 'Omniscient Ring',
+        Back = 'Prism Cape',
+        Waist = 'Sorcerer\'s Belt',
+        Legs = 'Mahatma Slops',
+        Feet = 'Src. Sabots +1',
+    },
+    NukeHNM = {
+        Ammo = 'Phtm. Tathlum',
+        Head = 'Demon Helm +1',
+        Neck = 'Prudence Torque',
+        Ear1 = 'Novio Earring',
+        Ear2 = 'Moldavite Earring',
+        Body = 'Mahatma Hpl.',
+        Hands = 'Wzd. Gloves +1',
+        Ring1 = 'Snow Ring',
+        Ring2 = 'Omniscient Ring',
         Back = 'Prism Cape',
         Waist = 'Sorcerer\'s Belt',
         Legs = 'Mahatma Slops',
@@ -335,7 +389,7 @@ local sets = {
         Body = 'Mahatma Hpl.',
         Hands = 'Wzd. Gloves +1',
         Ring1 = 'Snow Ring',
-        Ring2 = 'Snow Ring',
+        Ring2 = 'Omniscient Ring',
         Back = 'Prism Cape',
         Waist = 'Sorcerer\'s Belt',
         Legs = 'Mahatma Slops',
@@ -413,6 +467,10 @@ end
 
 profile.HandleCommand = function(args)
     gcmage.DoCommands(args)
+
+    if (args[1] == 'horizonmode') then
+        profile.HandleDefault()
+    end
 end
 
 profile.HandleDefault = function()

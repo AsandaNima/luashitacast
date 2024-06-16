@@ -94,3 +94,63 @@
 
 ### v1.2.8
 - All DD - Fixed Fenrir's Earring - Added WS Handling
+- WHM - Add Cure V set for WHM
+- Add all races custom purgonurgo warp tunic
+
+### v1.2.9
+- BLM - Add explicit Stun set
+
+### v1.2.10
+- SMN - Add additional sets for Magical, Hybrid and Physical BPs
+
+### v1.2.11
+- All Jobs - Delay equipping resting gear for 16 seconds to maximize regen / refresh type effects
+- DRK - Fix bugs
+
+### v1.2.12
+- BLM - Automatically disable Yellow set when weakened
+- THF - Add set for Hide
+
+### v1.3.0
+- Add horizonmode. To be perfectly Horizon legal using the Horizon Mode setting in LuAshitacast, you can use this alias to manually trigger HandleDefault logic instead.
+
+### v1.3.2
+- Add Engaged check to TP_NIN for BST and THF
+- BRD - Change Sing_Default to actually be used as the base set for all songs
+- BRD - Use Sing_Buff set on Ballads, Mazurka and Paeon as a base set
+- BRD - Add explicit Large and Small Ballad sets
+- BRD - Add explicit Large and Small Horde Lullaby sets
+- BRD - Add /srecast toggle
+
+### v1.3.3
+- WHM - Add Medicine Ring
+
+### v1.3.4
+- WAR - Implements the job
+
+### v1.3.5
+- Fix the conquest packet being sent on Horizon that causes it to constantly poll until you zone or check status menu
+
+### v1.3.6
+- Fix Stun set behaviour
+
+### v1.3.7
+- Adds an additional set and toggle for BLM for HNMs
+
+### v1.3.8
+- Fix fenrirs earring logic
+
+### v1.3.9
+- Add StunACC set for RDM
+
+### v1.3.10
+- Fix bug on mage melee attempting to use fenrirs earring
+
+### v1.3.11
+- BRD - Split BRD Mazurka and Paeon sets
+- PLD - Add Cure 3 HP Up Set
+
+### v1.3.12
+- BST - Add Call Beast set
+- BRD - Update song spellcasting time
+- BLM - Fix Aspir and Diabolos Ring logic

@@ -5,11 +5,13 @@ local fastCastValue = 0.04 -- 4% from gear not including carbuncles cuffs or evo
 local carbuncles_cuffs = false
 local evokers_boots = false
 
+local cureMP = 895 -- Cure set max MP
+
 local sets = {
     Idle = {
         Main = 'Terra\'s Staff',
         Ear1 = 'Loquac. Earring',
-        Ear2 = 'Novia Earring',
+        Ear2 = 'Magnetic Earring',
         Ammo = 'Hedgehog Bomb',
         Head = 'Summoner\'s Horn',
         Neck = 'Jeweled Collar',
@@ -20,7 +22,7 @@ local sets = {
         Back = 'Umbra Cape',
         Waist = 'Hierarch Belt',
         Legs = 'Evoker\'s Spats',
-        Feet = 'Herald\'s Gaiters',
+        Feet = 'Evk. Pigaches +1',
     },
     IdleALT = {},
     IdleMaxMP = {},
@@ -28,12 +30,15 @@ local sets = {
         Main = 'Pluto\'s Staff',
         Head = 'Hydra Beret',
         Neck = 'Checkered Scarf',
-        Ear1 = 'Relaxing Earring',
-        Ear2 = 'Magnetic Earring',
+        Ear1 = 'Loquac. Earring',
+        Ear2 = 'Relaxing Earring',
         Body = 'Mahatma Hpl.',
-        Back = 'Errant Cape',
+        Hands = 'Hydra Gloves',
+        Back = 'Summoner\'s Cape',
         Waist = 'Hierarch Belt',
         Legs = 'Baron\'s Slops',
+        -- Legs = 'Hydra Brais',
+        Feet = 'Hydra Gaiters',
     },
     Town = {},
     Movement = {
@@ -74,7 +79,7 @@ local sets = {
         Neck = 'Jeweled Collar', -- 10
         Feet = 'Power Sandals', -- 7
         Back = 'Hexerei Cape',
-        Ring1 = 'Ruby Ring', -- 9
+        Ring1 = 'Triumph Ring', -- 10
         Waist = 'Water Belt', -- 20
         Ring2 = 'Malflame Ring', -- 10
     },
@@ -86,7 +91,7 @@ local sets = {
         Neck = 'Jeweled Collar', -- 10
         Back = 'Aurora Mantle', -- 7
         Waist = 'Fire Belt', -- 20
-        Ring1 = 'Diamond Ring', -- 9
+        Ring1 = 'Omniscient Ring', -- 10
         Ring2 = 'Malfrost Ring', -- 10
     },
     LightningRes = {
@@ -109,7 +114,7 @@ local sets = {
         Ear1 = 'Robust Earring', -- 11
         Ear2 = 'Robust Earring', -- 11
         Waist = 'Wind Belt', -- 20
-        Ring1 = 'Topaz Ring', -- 9
+        Ring1 = 'Robust Ring', -- 10
     },
     WindRes = {
         Ring2 = 'Malgust Ring', -- 10
@@ -129,7 +134,7 @@ local sets = {
         Neck = 'Jeweled Collar', -- 10
         Ear1 = 'Cmn. Earring', -- 11
         Ear2 = 'Cmn. Earring', -- 11
-        Ring1 = 'Sapphire Ring', -- 9
+        Ring1 = 'Communion Ring', -- 10
         Ring2 = 'Malflood Ring', -- 10
         Back = 'Hexerei Cape',
         Waist = 'Lightning Belt', -- 20
@@ -139,16 +144,24 @@ local sets = {
     Precast = {
         Ear1 = 'Loquac. Earring',
         Feet = 'Rostrum Pumps',
+        Back = { Name = 'Summoner\'s Cape', Priority = 100 },
     },
     Casting = { -- Default Casting Equipment when using Idle sets
         Main = 'Hermit\'s Wand', -- 25
         Sub = 'Hermit\'s Wand', -- 25
+        Ammo = 'Hedgehog Bomb',
         Head = 'Nashira Turban', -- 10
         Neck = 'Willpower Torque', -- 5
-        Ear1 = 'Merman\'s Earring',
+        Ear1 = 'Loquac. Earring',
         Ear2 = 'Magnetic Earring', -- 8
+        Body = 'Yinyang Robe',
+        Hands = 'Zenith Mitts +1',
+        Ring1 = 'Sattva Ring',
+        Ring2 = 'Evoker\'s Ring',
+        Back = { Name = 'Summoner\'s Cape', Priority = 100 },
         Waist = 'Druid\'s Rope', -- 10
-        Feet = 'Mountain Gaiters', -- 5
+        Legs = { Name = 'Summoner\'s Spats', Priority = 100 },
+        Feet = { Name = 'Mountain Gaiters', Priority = 100 }, -- 5
     },
     SIRD = { -- 102% to Cap, used on Stoneskin, Blink, Aquaveil and Utsusemi casts
         Main = 'Hermit\'s Wand', -- 25
@@ -156,23 +169,23 @@ local sets = {
         Ammo = 'Hedgehog Bomb',
         Head = 'Nashira Turban', -- 10
         Neck = 'Willpower Torque', -- 5
-        Ear1 = 'Merman\'s Earring',
+        Ear1 = 'Loquac. Earring',
         Ear2 = 'Magnetic Earring', -- 8
-        Body = 'Raven Jupon',
-        Hands = 'Raven Bracers',
-        Ring1 = 'Jelly Ring',
-        Ring2 = 'Sattva Ring',
-        Back = 'Umbra Cape',
+        Body = 'Yinyang Robe',
+        Hands = 'Zenith Mitts +1',
+        Ring1 = 'Sattva Ring',
+        Ring2 = 'Evoker\'s Ring',
+        Back = { Name = 'Summoner\'s Cape', Priority = 100 },
         Waist = 'Druid\'s Rope', -- 10
-        Legs = 'Raven Hose',
-        Feet = 'Mountain Gaiters', -- 5
+        Legs = { Name = 'Summoner\'s Spats', Priority = 100 },
+        Feet = { Name = 'Mountain Gaiters', Priority = 100 }, -- 5
     },
     Haste = { -- Used only on Haste, Refresh, Blink and Utsusemi casts
         Head = 'Nashira Turban',
         Ear1 = 'Loquac. Earring',
         Hands = 'Nashira Gages',
         Waist = 'Swift Belt',
-        -- Legs = 'Nashira Serawheels',
+        Legs = 'Nashira Seraweels',
         Feet = 'Nashira Crackows',
     },
     ConserveMP = {
@@ -182,17 +195,18 @@ local sets = {
     Cure = {
         Ammo = 'Hedgehog Bomb', -- 1
         Head = 'Hydra Beret', -- 8
-        Neck = 'Jeweled Collar',
+        Neck = 'Benign Necklace', -- 2
         Ear1 = 'Novia Earring', -- 7
         Ear2 = 'Magnetic Earring',
-        Body = 'Raven Jupon', -- 9
-        Hands = 'Raven Bracers', -- 5
+        Body = 'Hydra Doublet', -- 9
+        Hands = 'Hydra Gloves', -- 5
         Ring1 = 'Aqua Ring',
-        Ring2 = 'Aqua Ring',
-        Back = 'Errant Cape', -- 5
+        Ring2 = 'Communion Ring',
+        Back = { Name = 'Errant Cape', Priority = 100 }, -- 5
         Waist = 'Penitent\'s Rope', -- 3
         Legs = 'Raven Hose', -- 6
-        Feet = 'Raven Gaiters', -- 5
+        -- Legs = 'Hydra Brais', -- 6
+        Feet = 'Hydra Gaiters', -- 5
     },
     Cursna = {
         -- Back = 'Altruistic Cape',
@@ -201,14 +215,14 @@ local sets = {
     Enhancing = {
         Main = 'Kirin\'s Pole',
         Ammo = 'Hedgehog Bomb',
-        Head = 'Nashira Turban',
+        Head = 'Summoner\'s Horn',
         Neck = 'Enhancing Torque',
         Ear1 = 'Cmn. Earring',
         Ear2 = 'Cmn. Earring',
         Body = 'Mahatma Hpl.',
         Hands = 'Dvt. Mitts +1',
         Ring1 = 'Aqua Ring',
-        Ring2 = 'Aqua Ring',
+        Ring2 = 'Communion Ring',
         Back = 'Merciful Cape',
         Waist = 'Penitent\'s Rope',
         Legs = 'Mahatma Slops',
@@ -256,33 +270,39 @@ local sets = {
     BP_Delay = {
         Head = 'Summoner\'s Horn',
         Legs = 'Summoner\'s Spats',
-        Ring1 = 'Merman\'s Ring',
+        Ring1 = { Name = 'Merman\'s Ring', Priority = -1 },
         Ring2 = 'Evoker\'s Ring',
         Ear1 = 'Loquac. Earring',
         Ear2 = 'Novia Earring',
-        Back = 'Errant Cape',
+        Back = 'Summoner\'s Cape',
         Body = 'Yinyang Robe',
-        Hands = 'Summoner\'s Brcr.',
+        Hands = { Name = 'Smn. Bracers +1', Priority = 100 },
         Feet = 'Summoner\'s Pgch.',
         Ammo = 'Hedgehog Bomb',
-        Waist = 'Hierarch Belt',
+        Waist = { Name = 'Penitent\'s Rope', Priority = -1 },
         Neck = 'Smn. Torque',
     },
 
     BP = {
-        Head = 'Evoker\'s Horn',
+        Head = 'Evk. Horn +1',
         Legs = 'Evoker\'s Spats',
-        Ring1 = 'Sattva Ring',
+        Ring1 = { Name = 'Sattva Ring', Priority = 100 },
         Ring2 = 'Evoker\'s Ring',
         Ear1 = 'Loquac. Earring',
-        Ear2 = 'Novia Earring',
-        Back = 'Errant Cape',
-        Body = 'Summoner\'s Dblt.',
-        Hands = 'Summoner\'s Brcr.',
-        Feet = 'Summoner\'s Pgch.',
+        Ear2 = 'Magnetic Earring',
+        Back = 'Summoner\'s Cape',
+        Body = 'Smn. Doublet +1',
+        Hands = 'Smn. Bracers +1',
+        Feet = 'Nashira Crackows',
         Ammo = 'Hedgehog Bomb',
-        Waist = 'Hierarch Belt',
+        Waist = { Name = 'Hierarch Belt', Priority = 100 },
         Neck = 'Smn. Torque',
+    },
+    BP_Magical = {
+    },
+    BP_Physical = {
+    },
+    BP_Hybrid = {
     },
 }
 profile.Sets = sets
@@ -297,6 +317,12 @@ end
 Everything below can be ignored.
 --------------------------------
 ]]
+
+local SmnSkill = T{'Shining Ruby','Glittering Ruby','Crimson Howl','Inferno Howl','Frost Armor','Crystal Blessing','Aerial Armor','Hastega II','Fleet Wind','Hastega','Earthen Ward','Earthen Armor','Rolling Thunder','Lightning Armor','Soothing Current','Ecliptic Growl','Heavenward Howl','Ecliptic Howl','Noctoshield','Dream Shroud','Altana\'s Favor','Reraise','Reraise II','Reraise III','Raise','Raise II','Raise III','Wind\'s Blessing'}
+local SmnHealing = T{'Healing Ruby','Healing Ruby II','Whispering Wind','Spring Water'}
+local SmnMagical = T{'Searing Light','Meteorite','Holy Mist','Inferno','Fire II','Fire IV','Meteor Strike','Conflag Strike','Diamond Dust','Blizzard II','Blizzard IV','Heavenly Strike','Aerial Blast','Aero II','Aero IV','Wind Blade','Earthen Fury','Stone II','Stone IV','Geocrush','Judgement Bolt','Thunder II','Thunder IV','Thunderstorm','Thunderspark','Tidal Wave','Water II','Water IV','Grand Fall','Howling Moon','Lunar Bay','Ruinous Omen','Somnolence','Nether Blast','Night Terror','Level ? Holy'}
+local SmnEnfeebling = T{'Diamond Storm','Sleepga','Shock Squall','Slowga','Tidal Roar','Pavor Nocturnus','Ultimate Terror','Nightmare','Mewing Lullaby','Eerie Eye'}
+local SmnHybrid = T{'Flaming Crush','Burning Strike'};
 
 gcmage = gFunc.LoadFile('common\\gcmage.lua')
 
@@ -332,12 +358,31 @@ end
 
 profile.HandleCommand = function(args)
     gcmage.DoCommands(args)
+
+    if (args[1] == 'horizonmode') then
+        profile.HandleDefault()
+    end
 end
 
 profile.HandleDefault = function()
     local petAction = gData.GetPetAction()
     if (petAction ~= nil) then
         gFunc.EquipSet('BP')
+
+        -- Era provides near zero gear options so almost all of these just default to the default BP set or Magical
+        if (SmnSkill:contains(petAction.Name)) then
+            -- Do Nothing
+        elseif (SmnMagical:contains(petAction.Name)) then
+            gFunc.EquipSet(sets.BP_Magical)
+        elseif (SmnHybrid:contains(petAction.Name)) then
+            gFunc.EquipSet(sets.BP_Hybrid)
+        elseif (SmnHealing:contains(petAction.Name)) then
+            -- Do Nothing
+        elseif (SmnEnfeebling:contains(petAction.Name)) then
+            gFunc.EquipSet(sets.BP_Magical)
+        else
+            gFunc.EquipSet(sets.BP_Physical)
+        end
     else
         gcmage.DoDefault(nil, nil, nil, nil)
     end
@@ -359,7 +404,7 @@ profile.HandlePrecast = function()
 end
 
 profile.HandleMidcast = function()
-    gcmage.DoMidcast(sets, nil, nil, nil, nil)
+    gcmage.DoMidcast(sets, cureMP, cureMP, cureMP, cureMP)
 end
 
 return profile

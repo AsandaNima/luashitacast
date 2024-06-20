@@ -7,6 +7,7 @@ local ta_rogue_armlets = true
 local sets = {
     Idle = {
         Head = "President. Hairpin",
+        Hands = "Homam Manopolas",
     },
     IdleALT = {},
     Resting = {},
@@ -39,12 +40,13 @@ local sets = {
     Precast = {},
     SIRD = { -- 102% to Cap
     },
+
     Haste = { -- Used for Utsusemi cooldown
-    Head = "Homam Zucchetto",-- +3haste
-    Body = "Rapparee Harness",-- +4haste
-    Hands = "Homam Manopolas",-- +3haste
-    Waist = "Swift Belt",-- +4haste
-    Feet = "Homam Gambieras",-- +3haste
+        Head = "Homam Zucchetto",-- +3haste
+        Body = "Rapparee Harness",-- +4haste
+        Hands = "Homam Manopolas",-- +3haste
+        Waist = "Swift Belt",-- +4haste
+        Feet = "Homam Gambieras",-- +3haste
     },
 
     LockSet1 = {},
@@ -65,7 +67,15 @@ local sets = {
         Legs = "Dragon Subligar",-- +4dex
         Feet = "Homam Gambieras",-- +3haste +6acc +6racc
     },
-    TP_HighAcc = {},
+    TP_HighAcc = {
+        Head = "Optical Hat",-- +10acc +10racc +10evasion
+        Ear1 = "Suppanomimi",-- +2dex +5dagger +5evasion +5katana
+        Body = "Homam Corazza",--15acc +1tripple attack
+        Hands = "War Gloves",-- +5acc +5evasion
+        Neck = "Peacock Amulet",-- +10acc +10racc,
+        Waist = "Life Belt",-- +10acc
+        Feet = "Homam Gambieras",-- +3haste +6acc +6racc
+    },
     TP_NIN = {},
 
     WS = {
@@ -82,12 +92,71 @@ local sets = {
         Legs = "Dragon Subligar",-- +4dex
         Feet = "Bounding Boots",-- +3dex +3agi
     },
-    WS_Evisceration = {},
-    WS_SharkBite = {},
+    WS_Evisceration = {
+        Head = "Asn. Bonnet +1",-- +6dex +1mug
+		Neck = "Love Torque",-- +5dex +7dagger
+        Ear2 = "Minuet Earring",-- +1dex
+		Body = "Dragon Harness",--6dex +6agi
+        Hands = "Hecatomb Mittens",-- +4dex +7str
+        Ring1 = "Rajas Ring",-- +5dex +5str +5tp +5subtle
+        Ring2 = "Thunder Ring",-- +3 dex
+		Waist = "Warwolf Belt",-- +5STR +5DEX +5VIT
+		Legs = "Dragon Subligar",-- +4dex
+		Feet = "Bounding Boots",--+3dex +3agi
+    },
+    WS_SharkBite = {
+        Head = "Asn. Bonnet +1",-- +6dex +1mug
+        Neck = "Love Torque",-- +5dex +7dagger
+        Ear2 = "Drone Earring",-- +3agi
+        Body = "Dragon Harness",--6dex +6agi
+        Hands = "Hecatomb Mittens",-- +4dex +7str
+        Ring1 = "Rajas Ring",-- +5dex +5str +5tp +5subtle
+        Ring2 = "Thunder Ring",-- +3 dex
+        Waist = "Warwolf Belt",-- +5STR +5DEX +5VIT
+        Legs = "Dragon Subligar",-- +4dex
+        Feet = "Bounding Boots",--+3dex +3agi
+    },
 
-    SA = {},
-    TA = {},
-    SATA = {},
+    SA = {
+		Head = "Asn. Bonnet +1",-- +6dex +1mug
+		Neck = "Love Torque",-- +5dex +7dagger
+        Ear2 = "Minuet Earring",-- +1dex
+		Body = "Dragon Harness",--6dex +6agi
+        Hands = "Hecatomb Mittens",-- +4dex +7str
+        Ring1 = "Rajas Ring",-- +5dex +5str +5tp +5subtle
+        Ring2 = "Thunder Ring",-- +3 dex
+        Back = "Assassin's Cape",-- +4dex +4agi
+		Waist = "Warwolf Belt",-- +5STR +5DEX +5VIT
+		Legs = "Dragon Subligar",-- +4dex
+		Feet = "Bounding Boots",--+3dex +3agi
+    },
+    TA = {
+		Head = "Empress Hairpin",-- +3dex +3agi
+        Neck = "Love Torque",-- +5dex +7dagger
+        Ear1 = "Drone Earring",-- +3agi
+        Ear2 = "Drone Earring",-- +3agi
+		Body = "Dragon Harness",--6dex +6agi
+        Hands = "Rog. Armlets +1",-- +3dex +1steal
+        Ring1 = "Breeze Ring",-- +5 agi
+        Ring2 = "Breeze Ring",-- +5 agi
+        Back = "Assassin's Cape",-- +4dex +4agi
+		Waist = "Scouter's Rope",-- +4AGI +10evasion
+		Legs = "Rogue's Culottes",-- +4agi +1steal +10shield
+		Feet = "Bounding Boots",--+3dex +3agi
+    },
+    SATA = {
+        Head = "Asn. Bonnet +1",-- +6dex +1mug
+		Neck = "Love Torque",-- +5dex +7dagger
+        Ear2 = "Drone Earring",-- +3agi
+		Body = "Dragon Harness",--6dex +6agi
+        Hands = "Hecatomb Mittens",-- +4dex +7str
+        Ring1 = "Rajas Ring",-- +5dex +5str +5tp +5subtle
+        Ring2 = "Thunder Ring",-- +5 dex
+        Back = "Assassin's Cape",-- +4dex +4agi
+		Waist = "Warwolf Belt",-- +5STR +5DEX +5VIT
+		Legs = "Dragon Subligar",-- +4dex
+		Feet = "Bounding Boots",--+3dex +3agi
+    },
 
     Flee = {
         Feet = "Rogue's Poulaines",
@@ -106,7 +175,10 @@ local sets = {
         Head = "Asn. Bonnet +1",-- +1mug
     },
 
-    TH = {},
+    TH = {
+        Neck = "Nanaa's Charm",-- +3acc +1TH
+        Hands = "Asn. Armlets +1",-- +5chr +1TH
+    },
 
     Ranged = {
 		Head = "Optical Hat",-- +10acc +10racc +10evasion

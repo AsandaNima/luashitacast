@@ -136,7 +136,7 @@ function gcmelee.SetupMidcastDelay(fastCastValue)
         gFunc.SetMidDelay(castDelay)
     end
 
-    -- print(chat.header("DEBUG"):append(chat.message("Cast delay is " .. castDelay)))
+    print(chat.header("DEBUG"):append(chat.message("Cast delay is " .. castDelay)))
 end
 
 function gcmelee.DoMidcast(sets)

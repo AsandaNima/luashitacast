@@ -640,7 +640,7 @@ function gcmage.EquipHealing(maxMP, sets, chainspell)
         gFunc.EquipSet("Cure5")
     end
     if (player.SubJob == "WHM" and healers_earring) then
-        gFunc.Equip(healers_earring_slot, "Healer"s Earring")
+        gFunc.Equip(healers_earring_slot, "Healer's Earring")
     end
     if (action.Element == environment.WeatherElement) or (action.Element == environment.DayElement) then
         if (action.Element == "Light") and korin_obi then

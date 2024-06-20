@@ -297,7 +297,7 @@ function gcinclude.DoDefaultOverride(isMelee)
 
     if (player.Status == "Resting") then
         if (not restTimestampRecorded) then
-            restTimestamp = os.clock() + 16
+            restTimestamp = os.clock() + 1
             restTimestampRecorded = true
         end
         if (os.clock() > restTimestamp) then

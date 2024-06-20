@@ -3,7 +3,7 @@ local profile = {}
 local fastCastValue = 0.00 -- 0% from gear
 
 local ethereal_earring = true
-local ethereal_earring_slot = 'Ear2'
+local ethereal_earring_slot = "Ear2"
 
 local warlocks_mantle = false -- Don't add 2% to fastCastValue to this as it is SJ dependant
 
@@ -42,25 +42,25 @@ local sets = {
     BreathBonus = {},
     Stoneskin = {},
 
-    ['Ancient Circle'] = {},
-    ['Jump'] = {},
-    ['High Jump'] = {},
-    ['Super Jump'] = {},
-    ['Call Wyvern'] = {},
-    ['Spirit Link'] = {},
+    ["Ancient Circle"] = {},
+    ["Jump"] = {},
+    ["High Jump"] = {},
+    ["Super Jump"] = {},
+    ["Call Wyvern"] = {},
+    ["Spirit Link"] = {},
 
     WS = {},
-    ['Penta Thrust'] = {},
-    ['Wheeling Thrust'] = {},
-    ['Impulse Drive'] = {},
-    ['Skewer'] = {},
-    ['Geirskogul'] = {},
+    ["Penta Thrust"] = {},
+    ["Wheeling Thrust"] = {},
+    ["Impulse Drive"] = {},
+    ["Skewer"] = {},
+    ["Geirskogul"] = {},
 }
 profile.Sets = sets
 
 profile.SetMacroBook = function()
-    AshitaCore:GetChatManager():QueueCommand(1, '/macro book 1')
-    AshitaCore:GetChatManager():QueueCommand(1, '/macro set 1')
+    AshitaCore:GetChatManager():QueueCommand(1, "/macro book 1")
+    AshitaCore:GetChatManager():QueueCommand(1, "/macro set 1")
 end
 
 --[[
@@ -69,23 +69,23 @@ Everything below can be ignored.
 --------------------------------
 ]]
 
-gcmelee = gFunc.LoadFile('common\\gcmelee.lua')
+gcmelee = gFunc.LoadFile("common\\gcmelee.lua")
 
 local JobAbilities = T{
-    'Jump',
-    'High Jump',
-    'Super Jump',
-    'Spirit Link',
-    'Call Wyvern',
-    'Ancient Circle',
+    "Jump",
+    "High Jump",
+    "Super Jump",
+    "Spirit Link",
+    "Call Wyvern",
+    "Ancient Circle",
 }
 
 local WeaponSkills = T{
-    'Impulse Drive',
-    'Wheeling Thrust',
-    'Skewer',
-    'Penta Thrust',
-    'Geirskogul',
+    "Impulse Drive",
+    "Wheeling Thrust",
+    "Skewer",
+    "Penta Thrust",
+    "Geirskogul",
 }
 
 profile.HandleAbility = function()
@@ -132,7 +132,7 @@ end
 profile.HandleCommand = function(args)
     gcmelee.DoCommands(args)
 
-    if (args[1] == 'horizonmode') then
+    if (args[1] == "horizonmode") then
         profile.HandleDefault()
     end
 end
@@ -148,8 +148,8 @@ profile.HandleDefault = function()
     end
 
     local player = gData.GetPlayer()
-    if (ethereal_earring == true and (player.SubJob == 'WHM' or player.SubJob == 'RDM')) then
-        gFunc.Equip(ethereal_earring_slot, 'Ethereal Earring')
+    if (ethereal_earring == true and (player.SubJob == "WHM" or player.SubJob == "RDM")) then
+        gFunc.Equip(ethereal_earring_slot, "Ethereal Earring")
     end
 
     gFunc.EquipSet(gcinclude.BuildLockableSet(gData.GetEquipment()))
@@ -159,7 +159,7 @@ profile.HandlePrecast = function()
     local player = gData.GetPlayer()
     if (player.SubJob == "RDM" and warlocks_mantle) then
         gcmelee.DoPrecast(fastCastValue + 0.02)
-        gFunc.Equip('Back', 'Warlock\'s Mantle')
+        gFunc.Equip("Back", "Warlock's Mantle")
     else
         gcmelee.DoPrecast(fastCastValue)
     end
@@ -170,8 +170,8 @@ profile.HandleMidcast = function()
 
     local player = gData.GetPlayer()
     local action = gData.GetAction()
-    if (player.SubJob == 'WHM' or player.SubJob == 'RDM') then
-        if (action.Name == 'Stoneskin') then
+    if (player.SubJob == "WHM" or player.SubJob == "RDM") then
+        if (action.Name == "Stoneskin") then
             gFunc.EquipSet(sets.Stoneskin)
         else
             gFunc.EquipSet(sets.MaxHP)

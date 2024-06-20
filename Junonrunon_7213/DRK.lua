@@ -51,8 +51,8 @@ local sets = {
 profile.Sets = sets
 
 profile.SetMacroBook = function()
-    AshitaCore:GetChatManager():QueueCommand(1, '/macro book 1')
-    AshitaCore:GetChatManager():QueueCommand(1, '/macro set 1')
+    AshitaCore:GetChatManager():QueueCommand(1, "/macro book 1")
+    AshitaCore:GetChatManager():QueueCommand(1, "/macro set 1")
 end
 
 --[[
@@ -61,13 +61,13 @@ Everything below can be ignored.
 --------------------------------
 ]]
 
-gcmelee = gFunc.LoadFile('common\\gcmelee.lua')
+gcmelee = gFunc.LoadFile("common\\gcmelee.lua")
 
 profile.HandleAbility = function()
     local action = gData.GetAction()
-    if (action.Name == 'Weapon Bash') then
+    if (action.Name == "Weapon Bash") then
         gFunc.EquipSet(sets.WeaponBash)
-    elseif (action.Name == 'Arcane Circle') then
+    elseif (action.Name == "Arcane Circle") then
         gFunc.EquipSet(sets.ArcaneCircle)
     end
 end
@@ -89,20 +89,20 @@ profile.HandleWeaponskill = function()
     gFunc.EquipSet(sets.WS)
 
     local action = gData.GetAction()
-    if (action.Name == 'Guillotine') then
+    if (action.Name == "Guillotine") then
         gFunc.EquipSet(sets.WS_Guillotine)
-    elseif (action.Name == 'Spinning Slash') then
+    elseif (action.Name == "Spinning Slash") then
         gFunc.EquipSet(sets.WS_SpinningSlash)
-    elseif (action.Name == 'Cross Reaper') then
+    elseif (action.Name == "Cross Reaper") then
         gFunc.EquipSet(sets.WS_CrossReaper)
     end
 
     -- Assumes you are using Evasion set as your zerg set.
-    if (gcdisplay.IdleSet == 'Evasion') then
+    if (gcdisplay.IdleSet == "Evasion") then
         gFunc.EquipSet(sets.Evasion)
     end
 
-    local souleater = gData.GetBuffCount('Souleater')
+    local souleater = gData.GetBuffCount("Souleater")
     if (souleater > 0) then
         gFunc.EquipSet(sets.SoulEater)
     end
@@ -124,7 +124,7 @@ end
 profile.HandleCommand = function(args)
     gcmelee.DoCommands(args)
 
-    if (args[1] == 'horizonmode') then
+    if (args[1] == "horizonmode") then
         profile.HandleDefault()
     end
     -- You may add logic here
@@ -134,8 +134,8 @@ profile.HandleDefault = function()
     gcmelee.DoDefault()
 
     local player = gData.GetPlayer()
-    local souleater = gData.GetBuffCount('Souleater')
-    if (souleater > 0 and player.Status == 'Engaged' and use_chaos_burgeonet_for_tp_during_souleater) then
+    local souleater = gData.GetBuffCount("Souleater")
+    if (souleater > 0 and player.Status == "Engaged" and use_chaos_burgeonet_for_tp_during_souleater) then
         gFunc.EquipSet(sets.SoulEater)
     end
 
@@ -152,15 +152,15 @@ profile.HandleMidcast = function()
     gcmelee.DoMidcast(sets)
 
     local action = gData.GetAction()
-    if (action.Skill == 'Elemental Magic') then
+    if (action.Skill == "Elemental Magic") then
         gFunc.EquipSet(sets.Nuke)
-    elseif (action.Skill == 'Enfeebling Magic') then
+    elseif (action.Skill == "Enfeebling Magic") then
         gFunc.EquipSet(sets.Enfeebling)
-    elseif (action.Skill == 'Dark Magic') then
+    elseif (action.Skill == "Dark Magic") then
         gFunc.EquipSet(sets.Drain)
-        if (string.contains(action.Name, 'Absorb')) then
+        if (string.contains(action.Name, "Absorb")) then
             gFunc.EquipSet(sets.Absorb)
-        elseif (string.contains(action.Name, 'Stun')) then
+        elseif (string.contains(action.Name, "Stun")) then
             gFunc.EquipSet(sets.Haste)
         end
     end

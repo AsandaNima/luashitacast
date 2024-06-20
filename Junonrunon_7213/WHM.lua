@@ -38,7 +38,7 @@ local sets = {
     Cure = {},
     Cure5 = {},
     Regen = {
-        Body = 'Cleric\'s Bliaut',
+        Body = "Cleric's Bliaut",
     },
     Cursna = {},
 
@@ -70,8 +70,8 @@ local sets = {
 profile.Sets = sets
 
 profile.SetMacroBook = function()
-    AshitaCore:GetChatManager():QueueCommand(1, '/macro book 1')
-    AshitaCore:GetChatManager():QueueCommand(1, '/macro set 1')
+    AshitaCore:GetChatManager():QueueCommand(1, "/macro book 1")
+    AshitaCore:GetChatManager():QueueCommand(1, "/macro set 1")
 end
 
 --[[
@@ -80,7 +80,7 @@ Everything below can be ignored.
 --------------------------------
 ]]
 
-gcmage = gFunc.LoadFile('common\\gcmage.lua')
+gcmage = gFunc.LoadFile("common\\gcmage.lua")
 
 profile.HandleAbility = function()
     -- You may add logic here
@@ -114,7 +114,7 @@ end
 profile.HandleCommand = function(args)
     gcmage.DoCommands(args)
 
-    if (args[1] == 'horizonmode') then
+    if (args[1] == "horizonmode") then
         profile.HandleDefault()
     end
 end
@@ -133,11 +133,11 @@ profile.HandleMidcast = function()
     gcmage.DoMidcast(sets, ninSJMaxMP, nil, blmSJMaxMP, rdmSJMaxMP)
 
     local action = gData.GetAction()
-    if (string.match(action.Name, 'Regen')) then
-        gFunc.EquipSet('Regen')
+    if (string.match(action.Name, "Regen")) then
+        gFunc.EquipSet("Regen")
     end
-    if (string.match(action.Name, 'Banish')) then
-        gFunc.EquipSet('Banish')
+    if (string.match(action.Name, "Banish")) then
+        gFunc.EquipSet("Banish")
     end
 end
 

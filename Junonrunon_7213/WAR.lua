@@ -42,23 +42,23 @@ local sets = {
     Provoke = {},
 
     DW = {
-        Ear1 = 'Stealth Earring',
+        Ear1 = "Stealth Earring",
     },
 }
 profile.Sets = sets
 
 profile.SetMacroBook = function()
-    AshitaCore:GetChatManager():QueueCommand(1, '/macro book 1')
-    AshitaCore:GetChatManager():QueueCommand(1, '/macro set 1')
+    AshitaCore:GetChatManager():QueueCommand(1, "/macro book 1")
+    AshitaCore:GetChatManager():QueueCommand(1, "/macro set 1")
 end
 
-gcmelee = gFunc.LoadFile('common\\gcmelee.lua')
+gcmelee = gFunc.LoadFile("common\\gcmelee.lua")
 
 profile.HandleAbility = function()
     local action = gData.GetAction()
-    if (action.Name == 'Warcry') then
+    if (action.Name == "Warcry") then
         gFunc.EquipSet(sets.Warcry)
-    elseif (action.Name == 'Provoke') then
+    elseif (action.Name == "Provoke") then
         gFunc.EquipSet(sets.Provoke)
     end
 end
@@ -86,27 +86,27 @@ profile.OnLoad = function()
     gcmelee.Load()
     profile.SetMacroBook()
 
-    gcinclude.SetAlias(T{'dw'})
+    gcinclude.SetAlias(T{"dw"})
     local function createToggle()
-        gcdisplay.CreateToggle('DW', false)
+        gcdisplay.CreateToggle("DW", false)
     end
     createToggle:once(2)
 end
 
 profile.OnUnload = function()
     gcmelee.Unload()
-    gcinclude.ClearAlias(T{'dw'})
+    gcinclude.ClearAlias(T{"dw"})
 end
 
 profile.HandleCommand = function(args)
-    if (args[1] == 'dw') then
-        gcdisplay.AdvanceToggle('DW')
-        gcinclude.Message('DW', gcdisplay.GetToggle('DW'))
+    if (args[1] == "dw") then
+        gcdisplay.AdvanceToggle("DW")
+        gcinclude.Message("DW", gcdisplay.GetToggle("DW"))
     else
         gcmelee.DoCommands(args)
     end
 
-    if (args[1] == 'horizonmode') then
+    if (args[1] == "horizonmode") then
         profile.HandleDefault()
     end
 end
@@ -115,7 +115,7 @@ profile.HandleDefault = function()
     gcmelee.DoDefault()
 
     local player = gData.GetPlayer()
-    if (gcdisplay.GetToggle('DW') and player.Status == 'Engaged') then
+    if (gcdisplay.GetToggle("DW") and player.Status == "Engaged") then
         gFunc.EquipSet(sets.DW)
     end
 

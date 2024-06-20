@@ -2,9 +2,9 @@ local profile = {}
 
 local fastCastValue = 0.00 -- 0% from gear
 
--- Replace these with '' if you do not have them
-local myochin_kabuto = 'Myochin Kabuto'
-local saotome_kote = 'Saotome Kote'
+-- Replace these with "" if you do not have them
+local myochin_kabuto = "Myochin Kabuto"
+local saotome_kote = "Saotome Kote"
 
 local sets = {
     Idle = {},
@@ -43,8 +43,8 @@ local sets = {
 profile.Sets = sets
 
 profile.SetMacroBook = function()
-    AshitaCore:GetChatManager():QueueCommand(1, '/macro book 1')
-    AshitaCore:GetChatManager():QueueCommand(1, '/macro set 1')
+    AshitaCore:GetChatManager():QueueCommand(1, "/macro book 1")
+    AshitaCore:GetChatManager():QueueCommand(1, "/macro set 1")
 end
 
 --[[
@@ -53,16 +53,16 @@ Everything below can be ignored.
 --------------------------------
 ]]
 
-gcmelee = gFunc.LoadFile('common\\gcmelee.lua')
+gcmelee = gFunc.LoadFile("common\\gcmelee.lua")
 
 profile.HandleAbility = function()
     local action = gData.GetAction()
-    if (action.Name == 'Meditate') then
-        if (myochin_kabuto ~= '') then
-            gFunc.Equip('Head', myochin_kabuto)
+    if (action.Name == "Meditate") then
+        if (myochin_kabuto ~= "") then
+            gFunc.Equip("Head", myochin_kabuto)
         end
-        if (saotome_kote ~= '') then
-            gFunc.Equip('Hands', saotome_kote)
+        if (saotome_kote ~= "") then
+            gFunc.Equip("Hands", saotome_kote)
         end
     end
 end
@@ -83,7 +83,7 @@ profile.HandleWeaponskill = function()
     gFunc.EquipSet(sets.WS)
 
     local action = gData.GetAction()
-    if (action.Name == 'Tachi: Kaiten') then
+    if (action.Name == "Tachi: Kaiten") then
         gFunc.EquipSet(sets.WS_Kaiten)
     end
 
@@ -102,7 +102,7 @@ end
 profile.HandleCommand = function(args)
     gcmelee.DoCommands(args)
 
-    if (args[1] == 'horizonmode') then
+    if (args[1] == "horizonmode") then
         profile.HandleDefault()
     end
 end

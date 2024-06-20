@@ -56,8 +56,8 @@ local sets = {
 profile.Sets = sets
 
 profile.SetMacroBook = function()
-    AshitaCore:GetChatManager():QueueCommand(1, '/macro book 1')
-    AshitaCore:GetChatManager():QueueCommand(1, '/macro set 1')
+    AshitaCore:GetChatManager():QueueCommand(1, "/macro book 1")
+    AshitaCore:GetChatManager():QueueCommand(1, "/macro set 1")
 end
 
 --[[
@@ -66,29 +66,29 @@ Everything below can be ignored.
 --------------------------------
 ]]
 
-gcmelee = gFunc.LoadFile('common\\gcmelee.lua')
+gcmelee = gFunc.LoadFile("common\\gcmelee.lua")
 
 profile.HandleAbility = function()
     gFunc.EquipSet(sets.EnmityDown)
 
     local action = gData.GetAction()
-    if (action.Name == 'Scavenge') then
+    if (action.Name == "Scavenge") then
         gFunc.EquipSet(sets.Scavenge)
-    elseif (action.Name == 'Shadowbind') then
+    elseif (action.Name == "Shadowbind") then
         gFunc.EquipSet(sets.Shadowbind)
-    elseif (action.Name == 'Camouflage') then
+    elseif (action.Name == "Camouflage") then
         gFunc.EquipSet(sets.Camouflage)
-    elseif (action.Name == 'Sharpshot') then
+    elseif (action.Name == "Sharpshot") then
         gFunc.EquipSet(sets.Sharpshot)
-    elseif (action.Name == 'Eagle Eye Shot') then
+    elseif (action.Name == "Eagle Eye Shot") then
         gFunc.EquipSet(sets.Ranged_ATK)
 
         local equipment = gData.GetEquipment()
-        local unlimitedShot = gData.GetBuffCount('Unlimited Shot')
+        local unlimitedShot = gData.GetBuffCount("Unlimited Shot")
         if (unlimitedShot == 1) then
             gFunc.EquipSet(sets.UnlimitedShot)
         elseif (equipment.Ammo ~= nil and equipment.Ammo.Name == special_ammo) then
-            print(chat.header('RNG'):append(chat.message('Action Canceled: Special Ammo Protection')))
+            print(chat.header("RNG"):append(chat.message("Action Canceled: Special Ammo Protection")))
             gFunc.CancelAction()
         end
     end
@@ -102,9 +102,9 @@ profile.HandlePreshot = function()
     gFunc.EquipSet(sets.Preshot)
 
     local equipment = gData.GetEquipment()
-    local unlimitedShot = gData.GetBuffCount('Unlimited Shot')
+    local unlimitedShot = gData.GetBuffCount("Unlimited Shot")
     if (unlimitedShot == 0 and equipment.Ammo ~= nil and equipment.Ammo.Name == special_ammo) then
-        print(chat.header('RNG'):append(chat.message('Action Canceled: Special Ammo Protection')))
+        print(chat.header("RNG"):append(chat.message("Action Canceled: Special Ammo Protection")))
         gFunc.CancelAction()
     end
 end
@@ -112,12 +112,12 @@ end
 profile.HandleMidshot = function()
     gFunc.EquipSet(sets.Ranged_ACC)
 
-    local barrage = gData.GetBuffCount('Barrage')
+    local barrage = gData.GetBuffCount("Barrage")
     if (barrage == 1) then
         gFunc.EquipSet(sets.Barrage)
     end
 
-    local unlimitedShot = gData.GetBuffCount('Unlimited Shot')
+    local unlimitedShot = gData.GetBuffCount("Unlimited Shot")
     if (unlimitedShot == 1) then
         gFunc.EquipSet(sets.UnlimitedShot)
     end
@@ -127,18 +127,18 @@ profile.HandleWeaponskill = function()
     gFunc.EquipSet(sets.WS)
 
     local equipment = gData.GetEquipment()
-    local unlimitedShot = gData.GetBuffCount('Unlimited Shot')
+    local unlimitedShot = gData.GetBuffCount("Unlimited Shot")
     if (unlimitedShot == 1) then
         gFunc.EquipSet(sets.UnlimitedShot)
     elseif (equipment.Ammo ~= nil and equipment.Ammo.Name == special_ammo) then
-        print(chat.header('RNG'):append(chat.message('Action Canceled: Special Ammo Protection')))
+        print(chat.header("RNG"):append(chat.message("Action Canceled: Special Ammo Protection")))
         gFunc.CancelAction()
     end
 
     local action = gData.GetAction()
-    if (action.Name == 'Slug Shot') then
+    if (action.Name == "Slug Shot") then
         gFunc.EquipSet(sets.WS_SlugShot)
-    elseif (action.Name == 'Coronach') then
+    elseif (action.Name == "Coronach") then
         gFunc.EquipSet(sets.WS_Coronach)
     end
 end
@@ -155,7 +155,7 @@ end
 profile.HandleCommand = function(args)
     gcmelee.DoCommands(args)
 
-    if (args[1] == 'horizonmode') then
+    if (args[1] == "horizonmode") then
         profile.HandleDefault()
     end
 end

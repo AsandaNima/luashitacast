@@ -8,15 +8,15 @@ Everything below can be ignored.
 
 local Toggles = {}
 local Cycles = {}
-local fonts = require('fonts')
+local fonts = require("fonts")
 
 local gcdisplay = {
-    IdleSet = 'Normal'
+    IdleSet = "Normal"
 }
 
 local fontSettings = {
     visible = true,
-    font_family = 'Segoe UI',
+    font_family = "Segoe UI",
     font_height = 12,
     color = 0xFFFFFFFF,
     position_x = 300,
@@ -29,7 +29,7 @@ local fontSettings = {
 
 function gcdisplay.AdvanceCycle(name)
     local ctable = Cycles[name]
-    if (type(ctable) ~= 'table') then
+    if (type(ctable) ~= "table") then
         return
     end
 
@@ -41,7 +41,7 @@ end
 
 function gcdisplay.SetCycleIndex(name, index)
     local ctable = Cycles[name]
-    if (type(ctable) ~= 'table') then
+    if (type(ctable) ~= "table") then
         return
     end
 
@@ -51,7 +51,7 @@ function gcdisplay.SetCycleIndex(name, index)
 end
 
 function gcdisplay.AdvanceToggle(name)
-    if (type(Toggles[name]) ~= 'boolean') then
+    if (type(Toggles[name]) ~= "boolean") then
         return
     elseif Toggles[name] then
         Toggles[name] = false
@@ -89,10 +89,10 @@ end
 
 function gcdisplay.GetCycle(name)
     local ctable = Cycles[name]
-    if (type(ctable) == 'table') then
+    if (type(ctable) == "table") then
         return ctable.Array[ctable.Index]
     else
-        return 'Unknown'
+        return "Unknown"
     end
 end
 
@@ -100,26 +100,26 @@ function gcdisplay.Unload()
     if (gcdisplay.FontObject ~= nil) then
         gcdisplay.FontObject:destroy()
     end
-    ashita.events.unregister('d3d_present', 'gcdisplay_present_cb')
+    ashita.events.unregister("d3d_present", "gcdisplay_present_cb")
 end
 
 function gcdisplay.Load()
     gcdisplay.Update()
     gcdisplay.FontObject = fonts.new(fontSettings)
-    ashita.events.register('d3d_present', 'gcdisplay_present_cb', function ()
-        local display = '  ' .. Main
+    ashita.events.register("d3d_present", "gcdisplay_present_cb", function ()
+        local display = "  " .. Main
         for k, v in pairs(Toggles) do
-            display = display .. '   '
+            display = display .. "   "
             if (v == true) then
-                display = display .. '|cFF00EE00|' .. k .. '|r'
+                display = display .. "|cFF00EE00|" .. k .. "|r"
             else
-                display = display .. '|cFF989898|' .. k .. '|r'
+                display = display .. "|cFF989898|" .. k .. "|r"
             end
         end
         for key, value in pairs(Cycles) do
-            display = display .. '   ' .. key .. ': ' .. '|cFF00EE00|' .. value.Array[value.Index] .. '|r'
+            display = display .. "   " .. key .. ": " .. "|cFF00EE00|" .. value.Array[value.Index] .. "|r"
         end
-        display = display .. '   ' .. 'IdleSet' .. ': ' .. '|cFF00EE00|' .. gcdisplay.IdleSet .. '|r' .. '  '
+        display = display .. "   " .. "IdleSet" .. ": " .. "|cFF00EE00|" .. gcdisplay.IdleSet .. "|r" .. "  "
         gcdisplay.FontObject.text = display
     end)
 end
